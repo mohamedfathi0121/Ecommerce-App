@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import SectionTitle from "./HomepageComponent/SectionTitle";
 import ProductCard from "./HomepageComponent/ProductCard";
 
@@ -7,18 +8,21 @@ function Home() {
   const [expandedCategories, setExpandedCategories] = useState({});
 
   useEffect(() => {
-    fetch("https://api.escuelajs.co/api/v1/products")
-      .then((res) => res.json())
-      .then((data) => {
+    axios
+      .get("https://api.escuelajs.co/api/v1/products")
+      .then((res) => {
+        const data = res.data;
+
         const grouped = {};
         data.forEach((product) => {
           const category = product.category.name;
           if (!grouped[category]) grouped[category] = [];
           grouped[category].push(product);
         });
+
         setProductsByCategory(grouped);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
   const handleShowMore = (category) => {
@@ -37,7 +41,7 @@ function Home() {
 
         return (
           <div key={category} style={{ marginBottom: "40px" }}>
-            <SectionTitle>{category} Department</SectionTitle>
+            <SectionTitle>{category.toUpperCase()} DEPARTMENT</SectionTitle>
 
             <div
               style={{
@@ -72,10 +76,9 @@ function Home() {
                     cursor: "pointer",
                     fontSize: "14px",
                     marginTop: "10px",
-                    width:'10vw'
                   }}
                 >
-                  {expandedCategories[category] ? "Less" : "More"}
+                  {expandedCategories[category] ? "عرض أقل" : "عرض المزيد"}
                 </button>
               </div>
             )}
