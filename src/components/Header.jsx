@@ -1,11 +1,10 @@
 import style from "./Header.module.css";
-import logo from "../assets/logo.png";
+import ShopCoLogo from "../assets/SHOP.CO.svg"; // Fixed import
 
-function Header () {
+function Header() {
     return (
-        <header className="header">
-        <img className={style.logo} src={logo} alt="logo" />
-
+        <header className={style.header}>
+            <img className={style.logo} src={ShopCoLogo} alt="SHOP.CO logo" />
         </header>
     );
 }

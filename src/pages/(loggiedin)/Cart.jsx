@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import CartPage from "../CartComponent/CartPage";
+import CartPage from "../../components/CartComponent/CartPage";
 
 export class Cart extends PureComponent {
   render() {
