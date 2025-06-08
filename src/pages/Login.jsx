@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Login.css';
+import style from './Login.module.css';
 import { Link } from 'react-router-dom';
 
 
@@ -41,8 +41,8 @@ export default function Login() {
   });
 
   return (
-    <div className="login-bg">
-      <div className="form-container shadow-lg p-4 rounded bg-white">
+    <div className={style.loginBg}>
+      <div className={`${style.formContainer} shadow-lg p-4 rounded bg-white`}>
         <h3 className="text-center mb-4">Login</h3>
         <form onSubmit={formik.handleSubmit}>
           {/* Email */}
