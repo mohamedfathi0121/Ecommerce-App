@@ -1,7 +1,7 @@
 import styles from "./Buttons.module.css";
-export function Button({ title }) {
+export function Button({ title ,onClick}) {
   return (
-    <button className={styles.gradientButton}>
+    <button className={styles.gradientButton} onClick={onClick} >
       <svg
         width="100%"
         height="100%"

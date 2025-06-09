@@ -49,7 +49,9 @@
   transition: all 0.2s ease-in-out;
 }
 
-.navLink:hover {
+.navLink:hover ,
+.navLink.active {
+  border-bottom: 2px solid black;
   color: #000;
 }
 
