@@ -1,30 +1,43 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
+
+import LoadingSpinner from "../spinner/LoadingSpinner";
+import { fetchAllProducts } from "../services/productService";
+import {Banner} from "../components/herocomponent/banner";
+
 import { Link } from "react-router-dom";
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
   const [expandedCategories, setExpandedCategories] = useState({});
+  const [loading, setLoading] = useState(true); // ✅ لازم نتحكم فيها
 
   useEffect(() => {
-    axios
-      .get("https://api.escuelajs.co/api/v1/products")
-      .then((res) => {
-        const data = res.data;
+  fetchAllProducts()
+    .then((data) => {
+      if (!Array.isArray(data)) {
+        console.error("Invalid data format:", data);
+        setLoading(false);
+        return;
+      }
 
-        const grouped = {};
-        data.forEach((product) => {
-          const category = product.category.name;
-          if (!grouped[category]) grouped[category] = [];
-          grouped[category].push(product);
-        });
+      const grouped = {};
+      data.forEach((product) => {
+        const category = product.categoryId?.name || "Unknown";
+        if (!grouped[category]) grouped[category] = [];
+        grouped[category].push(product);
+      });
 
-        setProductsByCategory(grouped);
-      })
-      .catch((err) => console.error("Error fetching products:", err));
-  }, []);
+      setProductsByCategory(grouped);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Error fetching products:", err);
+      setLoading(false);
+    });
+}, []);
+
 
   const handleShowMore = (category) => {
     setExpandedCategories((prev) => ({
@@ -33,8 +46,13 @@ function Home() {
     }));
   };
 
+  if (loading) return <LoadingSpinner />;
+
   return (
     <div>
+       <Banner />
+
+       
       {Object.entries(productsByCategory).map(([category, items]) => {
         const visibleItems = expandedCategories[category]
           ? items
@@ -42,7 +60,9 @@ function Home() {
 
         return (
           <div key={category} style={{ marginBottom: "40px" }}>
-            <SectionTitle>{category.toUpperCase()} DEPARTMENT</SectionTitle>
+            <SectionTitle>
+              {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase() + ' Department'}
+            </SectionTitle>
 
             <div
               style={{
@@ -53,14 +73,16 @@ function Home() {
               }}
             >
               {visibleItems.map((product) => (
+
              <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}> 
-                 <ProductCard 
-                  key={product.id}
-                  title={product.title}
-                  category={product.category.name}
-                  price={product.price}
-                  oldPrice={product.price + 10}
-                  image={product.images[0]}
+                 <ProductCard
+                  key={product._id} // ✅ غالبًا ال ID اسمه كده
+                  title={product.name}
+                  category={product.categoryId?.name}
+                  price={product.finalPrice}
+                  oldPrice={product.price}
+                  image={product.images?.[0]}
+
                 />
              </Link>
               ))}
@@ -71,17 +93,17 @@ function Home() {
                 <button
                   onClick={() => handleShowMore(category)}
                   style={{
-                    padding: "8px 16px",
+                    padding: "8px 5vw",
                     borderRadius: "6px",
                     border: "none",
                     backgroundColor: "#1e90ff",
                     color: "white",
                     cursor: "pointer",
                     fontSize: "14px",
-                    marginTop: "10px",
+                    marginTop: "5vh",
                   }}
                 >
-                  {expandedCategories[category] ? "عرض أقل" : "عرض المزيد"}
+                  {expandedCategories[category] ? "Less" : "More"}
                 </button>
               </div>
             )}
