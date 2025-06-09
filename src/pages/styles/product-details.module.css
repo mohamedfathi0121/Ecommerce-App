@@ -11,7 +11,7 @@
 
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 10px;
   padding: 0 20px;
   font-family: 'Segoe UI', sans-serif;
   color: var(--text-primary);
@@ -178,15 +178,17 @@
 .sizeOptions {
   display: flex;
   gap: 12px;
+
 }
 
 .sizeOption {
   padding: 8px 16px;
   border: 1px solid var(--border);
   background: none;
-  border-radius: 24px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.3s;
+  color: #000000;
 }
 
 .selectedSize {
@@ -253,49 +255,15 @@
   color: var(--primary);
 }
 
-.recommendedSection {
+/* .recommendedSection {
   margin: 60px 0;
-}
+} */
 
-.recommendedSection h2 {
-  font-size: 24px;
-  margin-bottom: 24px;
-}
 
-.recommendedProducts {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
 
-.recommendedProduct {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px;
-  transition: transform 0.3s;
-}
 
-.recommendedProduct:hover {
-  transform: translateY(-5px);
-}
 
-.recommendedProduct img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 12px;
-}
 
-.recommendedProduct h3 {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.recommendedProduct p {
-  color: var(--primary);
-  font-weight: 600;
-}
 
 @media (max-width: 1024px) {
   .productContainer {
@@ -321,6 +289,55 @@
     height: auto;
     max-height: 400px;
   }
+}
+ .relatedSection {
+  margin-top: 50px;
+  border-top: 1px solid #ccc;
+  padding-top: 30px;
+}
+
+.relatedTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.relatedCard {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  transition: 0.2s ease;
+}
+
+.relatedCard:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+}
+
+.relatedImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.relatedName {
+  margin: 10px 0 5px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.relatedPrice {
+  font-size: 14px;
+  color: #333;
 }
 
 @media (max-width: 768px) {

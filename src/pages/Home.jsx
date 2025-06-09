@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
 
@@ -8,12 +9,14 @@ import {Banner} from "../components/herocomponent/banner";
 
 import { Link } from "react-router-dom";
 
+
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
   const [expandedCategories, setExpandedCategories] = useState({});
   const [loading, setLoading] = useState(true); // ✅ لازم نتحكم فيها
 
   useEffect(() => {
+=
   fetchAllProducts()
     .then((data) => {
       if (!Array.isArray(data)) {
@@ -74,6 +77,8 @@ function Home() {
             >
               {visibleItems.map((product) => (
 
+
+
              <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}> 
                  <ProductCard
                   key={product._id} // ✅ غالبًا ال ID اسمه كده
@@ -85,6 +90,7 @@ function Home() {
 
                 />
              </Link>
+
               ))}
             </div>
 
