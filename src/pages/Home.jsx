@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
@@ -52,7 +53,8 @@ function Home() {
               }}
             >
               {visibleItems.map((product) => (
-                <ProductCard
+             <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}> 
+                 <ProductCard 
                   key={product.id}
                   title={product.title}
                   category={product.category.name}
@@ -60,6 +62,7 @@ function Home() {
                   oldPrice={product.price + 10}
                   image={product.images[0]}
                 />
+             </Link>
               ))}
             </div>
 

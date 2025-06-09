@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import style from './Login.module.css';
+import style from './styles/Login.module.css';
 import { Link } from 'react-router-dom';
 
 
@@ -12,7 +12,7 @@ export default function Login() {
     
 
   const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('Email is required'),
+    email: Yup.string("email must be a charcteres only and don't have space").email('Invalid email').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
 
