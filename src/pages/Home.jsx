@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SectionTitle from "./HomepageComponent/SectionTitle";
-import ProductCard from "./HomepageComponent/ProductCard";
+import SectionTitle from "../components/HomepageComponent/SectionTitle";
+import ProductCard from "../components/HomepageComponent/ProductCard";
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});

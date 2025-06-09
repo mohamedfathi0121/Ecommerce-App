@@ -1,21 +1,28 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ProductDetails from './pages/Product-Details/product-details';
-// import ProductCard from'./pages/HomepageComponent/ProductCard'
+
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import Home from './pages/Home'
+import Layout from './components/Layout'
+import Login from './pages/Login'
+import NotFound from './pages/NotFound'
 
 function App() {
+ 
+
   return (
-    <Router>
+    <>
       <Routes>
-        <Route path="/" element={
-          <div style={{ padding: '20px' }}>
-            <h1>Welcome to E-Commerce App</h1>
-            <p>Try visiting /products/1 to see product details</p>
-          </div>
-        } />
-        <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="login" element={<Login />} />
+        
+        <Route path="/" element={<Layout />} >
+          <Route index element={<Home />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
-    </Router>
-  );
+    </>
+  )
+
 }
 
 export default App;

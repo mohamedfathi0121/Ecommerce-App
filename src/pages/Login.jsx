@@ -1,9 +1,11 @@
+
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./Login.module.css";
 import loginImage from "../assets/login.png";
 import { useNavigate } from "react-router-dom";
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ export default function Login() {
   });
 
   return (
+
     <div className={styles.container}>
       <div className={styles.left}>
         <img src={loginImage} alt="Login illustration" />
@@ -32,6 +35,7 @@ export default function Login() {
       <div className={styles.right}>
         <h2>Login</h2>
         <p>Login to access your account</p>
+
 
         <form onSubmit={formik.handleSubmit} className={styles.form}>
           <label>Email</label>
