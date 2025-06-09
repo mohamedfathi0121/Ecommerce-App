@@ -10,6 +10,7 @@ import Spinner from "./components/Spinner";
 import ProductDetails from "./pages/product-details";
 import AboutUs from "./pages/AboutUs";
 
+
 function App() {
   return (
     <>
