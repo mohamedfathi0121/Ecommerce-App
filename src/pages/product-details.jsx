@@ -1,93 +1,95 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles/product-details.module.css';
-import { FiHeart, FiShoppingCart, FiSearch, FiShare2 } from 'react-icons/fi';
-// import ProductCard from '../HomepageComponent/ProductCard';
+import { fetchProductById, fetchRelatedProducts } from '../services/api';
+import { useParams } from 'react-router-dom';
+import { FiShoppingCart, FiHeart, FiShare2 } from 'react-icons/fi';
+import Spinner from '../components/Spinner';
+import ProductCard from "../components/HomepageComponent/ProductCard";
+
 const ProductDetails = () => {
-  const product = {
-    title: ' T-Shirt',
-    brand: 'Vintage Apparel',
-    rating: 4.5,
-    reviews: 120,
-    priceBefore: 250,
-    priceAfter: 200,
-    discount: 20,
-    available: true,
-    images: [
-      'https://m.media-amazon.com/images/I/51x6+9L0OzL._AC_SX569_.jpg',
-      'https://m.media-amazon.com/images/I/51V189EzwNL._AC_SX569_.jpg',
-      'https://m.media-amazon.com/images/I/41FR3hOQIYL._AC_SX569_.jpg',
-    ],
-    sizes: ['Small', 'Medium', 'Large', 'XLarge'],
-    colors: ['#4A4C2A', '#C2B280', '#3F3D3D'],
-    description: 'This graphic t-shirt is perfect for any occasion. Crafted with 100% cotton for maximum comfort.'
-  };
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+  useEffect(() => {
+    const getProduct = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const productData = await fetchProductById(id);
+        setProduct(productData);
+        setSelectedImage(productData.images?.[0] || '');
+        setSelectedColor(productData.colors?.[0] || '');
+        setSelectedSize(productData.size?.[0] || '');
 
-//   const recommendedProducts = [
-//     { id: 1, name: 'Basic White Tee', price: 120, image: 'https://via.placeholder.com/300x300' },
-//     { id: 2, name: 'Black Hoodie', price: 180, image: 'https://via.placeholder.com/300x300' },
-//     { id: 3, name: 'Denim Jeans', price: 220, image: 'https://via.placeholder.com/300x300' },
-//   ];
+        const suggestions = await fetchRelatedProducts(id);
+        setRelatedProducts(suggestions);
+      } catch (err) {
+        setError(err.message || "An error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getProduct();
+  }, [id]);
+
+  if (loading) return <Spinner />;
+  if (error) return <p style={{ color: 'red' }}>error: {error}</p>;
+  if (!product) return <p>Product not found</p>;
 
   return (
     <div className={styles.container}>
-    
-      
-
       <div className={styles.productContainer}>
-   
+ 
         <div className={styles.imageGallery}>
           <div className={styles.thumbnailsColumn}>
-            {product.images.map((img, index) => (
+            {product.images?.map((img, index) => (
               <img
                 key={index}
                 src={img}
-                alt={`Thumbnail ${index + 1}`}
+                alt={`صورة ${index + 1}`}
                 className={`${styles.thumbnail} ${selectedImage === img ? styles.activeThumbnail : ''}`}
                 onClick={() => setSelectedImage(img)}
               />
             ))}
           </div>
-          
           <div className={styles.mainImageWrapper}>
-            <img 
-              src={selectedImage} 
-              alt={product.title} 
-              className={styles.mainImage}
-            />
+            <img src={selectedImage} alt={product.name} className={styles.mainImage} />
           </div>
         </div>
 
-       
+    
         <div className={styles.detailsSection}>
-          <h1 className={styles.productTitle}>{product.title}</h1>
-          <p className={styles.brandName}>{product.brand}</p>
-          
+          <h1 className={styles.productTitle}>{product.name}</h1>
+          <p className={styles.brandName}>{product.brandId?.name || 'Unbranded'}</p>
+
           <div className={styles.ratingContainer}>
             <div className={styles.stars}>
-              {'★'.repeat(Math.floor(product.rating))}
-              {'☆'.repeat(5 - Math.floor(product.rating))}
+              {'★'.repeat(Math.floor(product.Rating || 0))}
+              {'☆'.repeat(5 - Math.floor(product.Rating || 0))}
             </div>
-            <span className={styles.reviews}>({product.reviews} reviews)</span>
+            <span className={styles.reviews}>({product.review?.length || 0} review)</span>
           </div>
 
           <div className={styles.priceContainer}>
-            <span className={styles.currentPrice}>${product.priceAfter}</span>
-            <span className={styles.oldPrice}>${product.priceBefore}</span>
-            <span className={styles.discount}>{product.discount}% OFF</span>
+            <span className={styles.currentPrice}>${product.finalPrice?.toFixed(2)}</span>
+            <span className={styles.oldPrice}>${product.price?.toFixed(2)}</span>
+            <span className={styles.discount}>{product.discount}% discount</span>
           </div>
 
           <p className={styles.description}>{product.description}</p>
 
-          {/* Color Selection */}
           <div className={styles.colorSelection}>
             <h3>Color:</h3>
             <div className={styles.colorOptions}>
-              {product.colors.map((color, index) => (
-                <div 
+              {product.colors?.map((color, index) => (
+                <div
                   key={index}
                   className={`${styles.colorOption} ${selectedColor === color ? styles.selectedColor : ''}`}
                   style={{ backgroundColor: color }}
@@ -98,21 +100,24 @@ const ProductDetails = () => {
           </div>
 
           <div className={styles.sizeSelection}>
-            <h3>Size:</h3>
+            <h3>Size :</h3>
             <div className={styles.sizeOptions}>
-              {product.sizes.map((size, index) => (
+              {product.size?.map((size, index) => (
                 <button
                   key={index}
                   className={`${styles.sizeOption} ${selectedSize === size ? styles.selectedSize : ''}`}
                   onClick={() => setSelectedSize(size)}
                 >
-                  {size}
+                  {size.toUpperCase()}
                 </button>
               ))}
             </div>
           </div>
 
-       
+          <p className={styles.availability}>
+            {product.stock > 0 ? 'In stock' : 'Out of stock'}
+          </p>
+
           <div className={styles.actionButtons}>
             <button className={styles.addToCartBtn}>
               <FiShoppingCart /> Add to Cart
@@ -120,7 +125,6 @@ const ProductDetails = () => {
             <button className={styles.buyNowBtn}>Buy Now</button>
           </div>
 
-         
           <div className={styles.socialActions}>
             <button className={styles.wishlistBtn}>
               <FiHeart /> Add to Wishlist
@@ -131,12 +135,22 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+<div className={styles.relatedSection}>
+  <h2 className={styles.relatedTitle}>Suggested products</h2>
+  <div className={styles.relatedGrid}>
+    {relatedProducts.map(product => (
+      <ProductCard
+        key={product._id} 
+        title={product.name}
+        category={product.categoryId?.name}
+        price={product.finalPrice}
+        oldPrice={product.price}
+        image={product.images?.[0]}
+      />
+    ))}
+  </div>
+</div>
 
-      {/* Recommended Products */}
-      {/* <div className={styles.recommendedSection}>
-        <h2>You May Also Like</h2>
-        <ProductCard></ProductCard>
-      </div> */}
     </div>
   );
 };

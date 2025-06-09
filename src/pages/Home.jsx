@@ -1,26 +1,22 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
-import { Link } from "react-router-dom";
+import { fetchAllProducts } from "../services/api";
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
   const [expandedCategories, setExpandedCategories] = useState({});
 
   useEffect(() => {
-    axios
-      .get("https://api.escuelajs.co/api/v1/products")
-      .then((res) => {
-        const data = res.data;
-
+    fetchAllProducts()
+      .then((data) => {
         const grouped = {};
         data.forEach((product) => {
-          const category = product.category.name;
+          const category = product.categoryId?.name || "Unknown"; 
           if (!grouped[category]) grouped[category] = [];
           grouped[category].push(product);
         });
-
         setProductsByCategory(grouped);
       })
       .catch((err) => console.error("Error fetching products:", err));
@@ -53,16 +49,19 @@ function Home() {
               }}
             >
               {visibleItems.map((product) => (
-             <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}> 
-                 <ProductCard 
+                <Link
                   key={product.id}
-                  title={product.title}
-                  category={product.category.name}
-                  price={product.price}
-                  oldPrice={product.price + 10}
-                  image={product.images[0]}
-                />
-             </Link>
+                  to={`/products/${product.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <ProductCard
+                    title={product.name} 
+                    category={product.categoryId?.name} 
+                    price={product.finalPrice} 
+                    oldPrice={product.price} 
+                    image={product.images?.[0]} 
+                  />
+                </Link>
               ))}
             </div>
 
