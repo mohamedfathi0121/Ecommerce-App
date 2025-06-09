@@ -3,6 +3,7 @@ import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import { fetchAllProducts } from "../services/productService";
+import {Banner} from "../components/herocomponent/banner";
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
@@ -46,6 +47,9 @@ function Home() {
 
   return (
     <div>
+       <Banner />
+
+       
       {Object.entries(productsByCategory).map(([category, items]) => {
         const visibleItems = expandedCategories[category]
           ? items
