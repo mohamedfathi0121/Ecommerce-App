@@ -1,0 +1,148 @@
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo img {
+  height: 40px;
+  width: 200px;
+}
+
+.toggle {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+}
+.navLinks {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.navLink {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.navLink:hover {
+  color: #000;
+}
+
+.active {
+  color: #000;
+  border-bottom: 2px solid black;
+}
+.iconButton {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.iconGroup {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.iconButton:hover,
+.iconButton.active {
+  color: #000;
+  border-bottom: 2px solid black;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 0.4rem 0.6rem;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+  margin: 0;
+}
+.searchInput:focus {
+  border: 1px solid #000;
+  outline: none;
+}
+
+.searchButton {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 950px) {
+  .logo img {
+    height: 40px;
+    width: 150px;
+  }
+  .toggle {
+    display: block;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 1.5rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    z-index: 10;
+    width: 200px;
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  .navLink {
+    padding: 0.5rem 0;
+  }
+  .navLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+}

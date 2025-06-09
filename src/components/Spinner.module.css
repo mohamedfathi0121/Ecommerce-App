@@ -1,0 +1,25 @@
+.spinnerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 56px);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ddd;
+  border-top: 6px solid black;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Container Query: Smaller spinner in narrow containers */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

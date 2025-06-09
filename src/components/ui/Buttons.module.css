@@ -1,0 +1,28 @@
+
+button:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+/* Animate the SVG gradient */
+@keyframes gradientFlow {
+  0% { stop-color: #ffffff; }
+  50% { stop-color: #e0eb48; }
+  100% { stop-color: #d1522c; }
+}
+
+.gradientButton {
+  padding: 10px 30px;
+  border-radius: 5px;
+  border: none;
+  position: relative;
+  background-color: var(--primary)
+}
+
+.gradientButton svg text {
+  font: bold 16px Arial;
+}
+
+.gradientButton stop {
+  animation: gradientFlow 3s ease infinite;
+}

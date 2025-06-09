@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './product-details.module.css';
+import styles from './styles/product-details.module.css';
 import { FiHeart, FiShoppingCart, FiSearch, FiShare2 } from 'react-icons/fi';
 // import ProductCard from '../HomepageComponent/ProductCard';
 const ProductDetails = () => {

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
+
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import { fetchAllProducts } from "../services/productService";
 import {Banner} from "../components/herocomponent/banner";
+
+import { Link } from "react-router-dom";
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
@@ -70,14 +73,18 @@ function Home() {
               }}
             >
               {visibleItems.map((product) => (
-                <ProductCard
+
+             <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}> 
+                 <ProductCard
                   key={product._id} // ✅ غالبًا ال ID اسمه كده
                   title={product.name}
                   category={product.categoryId?.name}
                   price={product.finalPrice}
                   oldPrice={product.price}
                   image={product.images?.[0]}
+
                 />
+             </Link>
               ))}
             </div>
 
