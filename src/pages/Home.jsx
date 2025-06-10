@@ -1,45 +1,40 @@
+// Home.jsx
 import { useEffect, useState } from "react";
-
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
-
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import { fetchAllProducts } from "../services/productService";
-import {Banner} from "../components/herocomponent/banner";
-
-import { Link } from "react-router-dom";
-
+import { Banner } from "../components/herocomponent/banner";
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
   const [expandedCategories, setExpandedCategories] = useState({});
-  const [loading, setLoading] = useState(true); // ✅ لازم نتحكم فيها
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  fetchAllProducts()
-    .then((data) => {
-      if (!Array.isArray(data)) {
-        console.error("Invalid data format:", data);
+    fetchAllProducts()
+      .then((data) => {
+        if (!Array.isArray(data)) {
+          console.error("Invalid data format:", data);
+          setLoading(false);
+          return;
+        }
+
+        const grouped = {};
+        data.forEach((product) => {
+          const category = product.categoryId?.name || "Unknown";
+          if (!grouped[category]) grouped[category] = [];
+          grouped[category].push(product);
+        });
+
+        setProductsByCategory(grouped);
         setLoading(false);
-        return;
-      }
-
-      const grouped = {};
-      data.forEach((product) => {
-        const category = product.categoryId?.name || "Unknown";
-        if (!grouped[category]) grouped[category] = [];
-        grouped[category].push(product);
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+        setLoading(false);
       });
-
-      setProductsByCategory(grouped);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error("Error fetching products:", err);
-      setLoading(false);
-    });
-}, []);
-
+  }, []);
 
   const handleShowMore = (category) => {
     setExpandedCategories((prev) => ({
@@ -52,9 +47,7 @@ function Home() {
 
   return (
     <div>
-       <Banner />
-
-       
+      <Banner />
       {Object.entries(productsByCategory).map(([category, items]) => {
         const visibleItems = expandedCategories[category]
           ? items
@@ -75,21 +68,15 @@ function Home() {
               }}
             >
               {visibleItems.map((product) => (
-
-
-
-             <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}> 
-                 <ProductCard
-                  key={product._id} // ✅ غالبًا ال ID اسمه كده
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
                   title={product.name}
                   category={product.categoryId?.name}
                   price={product.finalPrice}
                   oldPrice={product.price}
                   image={product.images?.[0]}
-
                 />
-             </Link>
-
               ))}
             </div>
 

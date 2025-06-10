@@ -34,6 +34,8 @@ function App() {
           <Route path="profile" element={<Profile/>} />
           <Route path="about" element={<AboutUs />} />
           <Route path="spinner" element={<Spinner />} />
+          
+        
 
         </Route>
         <Route path="*" element={<NotFound />} />
