@@ -5,10 +5,9 @@ import ProductCard from "../components/HomepageComponent/ProductCard";
 
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import { fetchAllProducts } from "../services/productService";
-import {Banner} from "../components/herocomponent/banner";
+import { Banner } from "../components/herocomponent/banner";
 
 import { Link } from "react-router-dom";
-
 
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
@@ -16,33 +15,33 @@ function Home() {
   const [loading, setLoading] = useState(true); // ✅ لازم نتحكم فيها
 
   useEffect(() => {
-  fetchAllProducts()
-    .then((data) => {
-      if (!Array.isArray(data)) {
-        console.error("Invalid data format:", data);
+    fetchAllProducts()
+      .then(data => {
+        if (!Array.isArray(data)) {
+          console.error("Invalid data format:", data);
+          setLoading(false);
+          return;
+        }
+
+        const grouped = {};
+        data.forEach(product => {
+          console.log(product);
+          const category = product.categoryId?.name || "Unknown";
+          if (!grouped[category]) grouped[category] = [];
+          grouped[category].push(product);
+        });
+
+        setProductsByCategory(grouped);
         setLoading(false);
-        return;
-      }
-
-      const grouped = {};
-      data.forEach((product) => {
-        const category = product.categoryId?.name || "Unknown";
-        if (!grouped[category]) grouped[category] = [];
-        grouped[category].push(product);
+      })
+      .catch(err => {
+        console.error("Error fetching products:", err);
+        setLoading(false);
       });
+  }, []);
 
-      setProductsByCategory(grouped);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error("Error fetching products:", err);
-      setLoading(false);
-    });
-}, []);
-
-
-  const handleShowMore = (category) => {
-    setExpandedCategories((prev) => ({
+  const handleShowMore = category => {
+    setExpandedCategories(prev => ({
       ...prev,
       [category]: !prev[category],
     }));
@@ -52,9 +51,8 @@ function Home() {
 
   return (
     <div>
-       <Banner />
+      <Banner />
 
-       
       {Object.entries(productsByCategory).map(([category, items]) => {
         const visibleItems = expandedCategories[category]
           ? items
@@ -63,7 +61,9 @@ function Home() {
         return (
           <div key={category} style={{ marginBottom: "40px" }}>
             <SectionTitle>
-              {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase() + ' Department'}
+              {category.charAt(0).toUpperCase() +
+                category.slice(1).toLowerCase() +
+                " Department"}
             </SectionTitle>
 
             <div
@@ -74,22 +74,21 @@ function Home() {
                 padding: "0 20px",
               }}
             >
-              {visibleItems.map((product) => (
-
-
-
-             <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}> 
-                 <ProductCard
-                  key={product._id} // ✅ غالبًا ال ID اسمه كده
-                  title={product.name}
-                  category={product.categoryId?.name}
-                  price={product.finalPrice}
-                  oldPrice={product.price}
-                  image={product.images?.[0]}
-
-                />
-             </Link>
-
+              {visibleItems.map(product => (
+                <Link
+                  to={`/products/${product.id}`}
+                  style={{ textDecoration: "none" }}
+                  key={product._id}
+                >
+                  <ProductCard
+                    // ✅ غالبًا ال ID اسمه كده
+                    title={product.name}
+                    category={product.categoryId?.name}
+                    price={product.finalPrice}
+                    oldPrice={product.price}
+                    image={product.images?.[0]}
+                  />
+                </Link>
               ))}
             </div>
 

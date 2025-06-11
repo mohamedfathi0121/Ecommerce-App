@@ -56,3 +56,81 @@ export const fetchRelatedProducts = async (currentId, limit = 4) => {
     throw new Error("Failed to load suggested products");
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const searchProducts = async (query) => {
+  try {
+    if (!query || typeof query !== 'string') {
+      throw new Error('Invalid search query');
+    }
+
+    // Use query parameter (?searchKey=) instead of path parameter (/search/m)
+    const response = await api.get(`/product/search`, {
+      params: { searchKey: query.trim() } // Axios automatically encodes the query
+    });
+    
+    // if (!response.data?.finlProducts) {
+    //   throw new Error('No products found or invalid response structure');
+    // }
+
+    return response.data.product || []; // Return an empty array if no products found
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    throw error;
+  }
+};

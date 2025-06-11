@@ -76,13 +76,16 @@ function Header() {
               id="searchInput"
               aria-label="Search products"
             />
-            <button
-              type="submit"
+
+          { searchTerm && <Link to={`/search/?search=${searchTerm}`}>
+            <button            
               className={styles.searchButton}
               aria-label="Submit search"
             >
               <FaSearch />
             </button>
+            </Link>}
+            
           </form>
 
           {loading ? (
@@ -91,7 +94,7 @@ function Header() {
            <>
               <div className={styles.iconButtons}>
                 <NavLink
-                  to="/favorites"
+                  to="/wishlist"
                   className={({ isActive }) =>
                     `${styles.iconButton} ${isActive ? styles.active : ""}`
                   }
