@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+
 import NotFound from "./pages/NotFound";
-import Register from "./pages/Register";
+
 import Cart from "./pages/(loggiedin)/Cart";
 import ProductDetails from "./pages/product-details";
 import AboutUs from "./pages/AboutUs";

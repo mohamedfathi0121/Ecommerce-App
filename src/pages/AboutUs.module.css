@@ -1,0 +1,201 @@
+/* Base Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+              url('https://miro.medium.com/v2/resize:fit:1400/0*s0rCUHPtTQSRpr2D.png') center/cover no-repeat;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  margin-bottom: 60px;
+ width: 100%;
+}
+
+.heroContent {
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+/* Main Content Section */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.textSection {
+  flex: 1;
+  min-width: 300px;
+}
+
+.imageSection {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Text Blocks */
+.textBlock {
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: #ff6b6b;
+}
+
+.sectionText {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Features List */
+.featuresList {
+  list-style: none;
+  padding: 0;
+}
+
+.featureItem {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.featureIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  background-color: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 0.9rem;
+}
+
+/* Team Section */
+.teamSection {
+  background-color: #f9f9f9;
+  padding: 60px 0;
+  margin-top: 40px;
+}
+
+.teamSection .sectionTitle {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.teamSection .sectionTitle::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.teamGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.teamMember {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  transition: transform 0.3s ease;
+}
+
+.teamMember:hover {
+  transform: translateY(-10px);
+}
+
+.memberImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #eee;
+  margin: 0 auto 20px;
+  overflow: hidden;
+}
+
+.memberName {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.memberRole {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    height: 300px;
+  }
+  
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+  
+  .content {
+    flex-direction: column;
+  }
+  
+  .teamGrid {
+    flex-direction: column;
+    align-items: center;
+  }
+}

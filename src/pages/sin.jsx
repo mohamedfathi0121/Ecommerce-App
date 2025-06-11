@@ -1,83 +1,86 @@
-// src/components/auth/SignInForm.js
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema } from "../validation/auth";
-import { useAuth } from "../context/authContext";
-import toast from "react-hot-toast";
-import styles from "./SignInForm.module.css";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Login.css';
 
-const SignInForm = () => {
-  const navigate = useNavigate();
-  const { signIn, loading: authLoading, error: authError } = useAuth();
 
+// Define validation schema with Zod
+const schema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+  password: z.string().min(1, { message: 'Password is required' }),
+});
+
+export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError: setFormError,
+    reset
   } = useForm({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(schema),
   });
 
-  const onSubmit = async data => {
-    try {
-      await signIn({
-        email: data.email,
-        password: data.password,
-      });
-      toast.success("Signed in successfully!");
-      navigate("/");
-      // Optional: redirect here
-    } catch (error) {
-      toast.error("Sign in failed.");
-      if (error.fieldErrors) {
-        Object.entries(error.fieldErrors).forEach(([field, message]) => {
-          setFormError(field, { type: "manual", message });
-        });
-      }
+  const onSubmit = (data) => {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const foundUser = users.find(
+      user => user.email === data.email && user.password === data.password
+    );
+ 
+
+    if (foundUser) {
+      alert('Login successful!');
+    
+       window.location.href = '/dashboard';
+    } else {
+      alert('Invalid email or password.');
     }
+    reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <div className={styles.inputGroup}>
-        <label htmlFor="email" className={styles.label}>
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          {...register("email")}
-          className={styles.input}
-        />
-        {errors.email && (
-          <p className={styles.errorMessage}>{errors.email.message}</p>
-        )}
+    <div className="login-bg">
+      <div className="form-container shadow-lg p-4 rounded bg-white">
+        <h3 className="text-center mb-4">Login</h3>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Email */}
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input
+              id="email"
+              type="email"
+              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+              {...register('email')}
+            />
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email.message}</div>
+            )}
+          </div>
+
+          {/* Password */}
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input
+              id="password"
+              type="password"
+              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+              {...register('password')}
+            />
+            {errors.password && (
+              <div className="invalid-feedback">{errors.password.message}</div>
+            )}
+          </div>
+
+          <button type="submit" className="btn btn-success w-100">
+            Login
+          </button>
+          
+          <p className="mt-3 text-center">
+            Don't have an account? <a href="/register">Register</a>
+          </p>
+        </form>
       </div>
-
-      <div className={styles.inputGroup}>
-        <label htmlFor="password" className={styles.label}>
-          Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          {...register("password")}
-          className={styles.input}
-        />
-        {errors.password && (
-          <p className={styles.errorMessage}>{errors.password.message}</p>
-        )}
-      </div>
-
-      {authError && <div className={styles.error}>{authError}</div>}
-
-      <button type="submit" disabled={authLoading} className={styles.button}>
-        {authLoading ? "Signing in..." : "Sign In"}
-      </button>
-    </form>
+    </div>
   );
-};
-
-export default SignInForm;
+}
