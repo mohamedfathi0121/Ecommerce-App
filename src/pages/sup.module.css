@@ -1,62 +1,63 @@
-.form {
+
+.loginBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #F1EFEF;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
   align-items: center;
   justify-content: center;
 }
 
-.inputGroup {
-  display: flex;
-  flex-direction: column;
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 1rem;
+}
+.button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .label {
-  margin-bottom: 0.25rem;
-  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: black;
 }
-
-.input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.375rem;
-  font-size: 1rem;
+.form {
+  display: flex;
+  flex-direction: column;
 }
-
-.input:focus {
-  border-color: #3b82f6; /* blue-500 */
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+.redirectText {
+  color: black;
+  text-align: center;
+  margin-top: 1rem;
 }
-
 .errorMessage {
-  color: #ef4444; /* red-500 */
-  font-size: 0.875rem;
-}
-
-.error {
-  background-color: #fee2e2; /* red-100 */
-  color: #b91c1c; /* red-700 */
-  padding: 0.75rem;
-  border-radius: 0.375rem;
-}
-
-.button {
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: #3b82f6; /* blue-500 */
-  color: white;
-  border: none;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.button:hover:not(:disabled) {
-  background-color: #2563eb; /* blue-600 */
-}
-
-.button:disabled {
-  background-color: #93c5fd; /* blue-300 */
-  cursor: not-allowed;
+  color: red;
+  
+  margin-top: 1rem;
 }
