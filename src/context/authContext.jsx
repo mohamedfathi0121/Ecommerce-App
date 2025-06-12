@@ -91,10 +91,10 @@ const navigate = useNavigate();
     }
   };
 
-  const forgetPassword = async (data) => {
+  const forgetPassword = async (email , code , newPassword ) => {
     try {
       setLoading(true);
-      const response = await forgetPasswordService(data);
+      const response = await forgetPasswordService(email, code, newPassword );
       setError(null);
       toast.success('Password reset successfully!');
       return response;
