@@ -17,6 +17,7 @@ import Wishlist from "./pages/Wishlist";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import { ResetPassword } from "./pages/ForgetPassword";
 import { SendCode } from "./pages/SendCode";
+import LoginLayout from "./components/shared/LoginLayout";
 
 function App() {
   return (
@@ -24,10 +25,13 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <AuthProvider>
         <Routes>
-          <Route path="login" element={<SignInForm />} />
+        <Route path="/" element={<LoginLayout />}>
+        <Route path="login" element={<SignInForm />} />
           <Route path="register" element={<SignUpForm />} />
           <Route path="forgetpassword" element={<ResetPassword />} />
           <Route path="sendcode" element={<SendCode />} />
+        </Route>
+          
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="products/:id" element={<ProductDetails />} />

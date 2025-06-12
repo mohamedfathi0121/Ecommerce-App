@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OK, z } from "zod";
-import styles from "./styles/ForgotPassword.module.css";
+import styles from "./SignInForm.module.css";
 import { useAuth } from "../context/authContext";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -85,6 +85,7 @@ export const ResetPassword = () => {
 
   return (
     <div className={styles.container}>
+       <div className={styles.formContainer}>
       <div className={styles.header}>
         <h2 className={styles.title}>Reset Password</h2>
         <p className={styles.subtitle}>
@@ -116,60 +117,55 @@ export const ResetPassword = () => {
           seconds...
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <div className={styles.formGroup}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.resetformContainer}>
+          <div className={styles.inputGroup}>
             <label htmlFor="code" className={styles.label}>
               Verification Code
             </label>
             <input
               id="code"
               type="text"
-              inputMode="numeric"
-              className={`${styles.input} ${errors.code ? styles.error : ""}`}
+              className={`${styles.input}`}
               {...register("code")}
               disabled={loading}
-              placeholder="Enter 6-digit code"
+              placeholder="Enter your code"
             />
             {errors.code && (
-              <p className={styles.errorText}>{errors.code.message}</p>
+              <p className={styles.errorMessage}>{errors.code.message}</p>
             )}
           </div>
 
-          <div className={styles.formGroup}>
+          <div className={styles.inputGroup}>
             <label htmlFor="newPassword" className={styles.label}>
               New Password
             </label>
             <input
               id="newPassword"
               type="password"
-              className={`${styles.input} ${
-                errors.newPassword ? styles.error : ""
-              }`}
+              className={`${styles.input}`}
               {...register("newPassword")}
               disabled={loading}
               placeholder="Enter new password"
             />
             {errors.newPassword && (
-              <p className={styles.errorText}>{errors.newPassword.message}</p>
+              <p className={styles.errorMessage}>{errors.newPassword.message}</p>
             )}
           </div>
 
-          <div className={styles.formGroup}>
+          <div className={styles.inputGroup}>
             <label htmlFor="confirmPassword" className={styles.label}>
               Confirm Password
             </label>
             <input
               id="confirmPassword"
               type="password"
-              className={`${styles.input} ${
-                errors.confirmPassword ? styles.error : ""
-              }`}
+              className={`${styles.input}`}
               {...register("confirmPassword")}
               disabled={loading}
               placeholder="Re-enter new password"
             />
             {errors.confirmPassword && (
-              <p className={styles.errorText}>
+              <p className={styles.errorMessage}>
                 {errors.confirmPassword.message}
               </p>
             )}
@@ -177,7 +173,7 @@ export const ResetPassword = () => {
 
           <button
             type="submit"
-            className={`${styles.submitButton} ${
+            className={`${styles.button} ${
               loading ? styles.loading : ""
             }`}
             disabled={loading}
@@ -193,6 +189,7 @@ export const ResetPassword = () => {
           </button>
         </form>
       )}
+    </div>
     </div>
   );
 };

@@ -1,31 +1,39 @@
-/* SignInForm.module.css */
-
 .loginBg {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: #F1EFEF;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .formContainer {
   width: 100%;
- 
   max-width: 400px;
   background-color: white;
-  padding: 2rem;
+  padding: 3rem;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  
+  box-shadow: 20px 10px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.3rem;
+}
+.resetformContainer {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.3rem;
+}
+.inputGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 .input {
   width: 100%;
   padding: 0.75rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: white;
@@ -34,29 +42,82 @@
 .button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #007bff;
+  background-color: black;
   color: white;
   border: none;
   border-radius: 4px;
- cursor: pointer;
+  cursor: pointer;
   font-size: 1rem;
-   margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 .label {
   display: block;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   font-weight: bold;
   color: black;
 }
-.form {
-  display: flex;
-  flex-direction: column;
-}
-.inputGroup {
-  margin-bottom: 1rem;
-}
+
 .redirectText {
   color: black;
   text-align: center;
-  margin-top: 1rem;
+
+}
+.forgetPassword {
+  align-self: flex-end;
+  color:black;
+  text-decoration: none;
+}
+
+.errorMessage{
+  color: red;
+  font-size: 0.875rem;
+}
+.error {
+  color: red;
+  font-size: 1.5rem;
+}
+.success {
+  color: green;
+  font-size: 1.5rem;
+}
+.header {
+  text-align: center;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.message {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.message.error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.message.success {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
 }

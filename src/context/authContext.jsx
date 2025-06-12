@@ -42,6 +42,7 @@ const navigate = useNavigate();
   const signUp = async (userData) => {
     try {
       setLoading(true);
+      setError(null);
       const { user, token } = await signUpService(userData);
       localStorage.setItem('token', token);
       setUser(user);
@@ -58,6 +59,7 @@ const navigate = useNavigate();
   };
 
   const signIn = async (credentials) => {
+    setError(null);
     try {
       setLoading(true);
       const { user, token } = await signInService(credentials);
