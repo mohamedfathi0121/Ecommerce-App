@@ -1,22 +1,19 @@
+// Home.jsx
 import { useEffect, useState } from "react";
-
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
-
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import { fetchAllProducts } from "../services/productService";
 import { Banner } from "../components/herocomponent/banner";
 
-import { Link } from "react-router-dom";
-
 function Home() {
   const [productsByCategory, setProductsByCategory] = useState({});
   const [expandedCategories, setExpandedCategories] = useState({});
-  const [loading, setLoading] = useState(true); // ✅ لازم نتحكم فيها
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAllProducts()
-      .then(data => {
+      .then((data) => {
         if (!Array.isArray(data)) {
           console.error("Invalid data format:", data);
           setLoading(false);
@@ -24,8 +21,7 @@ function Home() {
         }
 
         const grouped = {};
-        data.forEach(product => {
-          console.log(product);
+        data.forEach((product) => {
           const category = product.categoryId?.name || "Unknown";
           if (!grouped[category]) grouped[category] = [];
           grouped[category].push(product);
@@ -34,14 +30,14 @@ function Home() {
         setProductsByCategory(grouped);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Error fetching products:", err);
         setLoading(false);
       });
   }, []);
 
-  const handleShowMore = category => {
-    setExpandedCategories(prev => ({
+  const handleShowMore = (category) => {
+    setExpandedCategories((prev) => ({
       ...prev,
       [category]: !prev[category],
     }));
@@ -52,7 +48,6 @@ function Home() {
   return (
     <div>
       <Banner />
-
       {Object.entries(productsByCategory).map(([category, items]) => {
         const visibleItems = expandedCategories[category]
           ? items
@@ -74,21 +69,16 @@ function Home() {
                 padding: "0 20px",
               }}
             >
-              {visibleItems.map(product => (
-                <Link
-                  to={`/products/${product.id}`}
-                  style={{ textDecoration: "none" }}
-                  key={product._id}
-                >
-                  <ProductCard
-                    // ✅ غالبًا ال ID اسمه كده
-                    title={product.name}
-                    category={product.categoryId?.name}
-                    price={product.finalPrice}
-                    oldPrice={product.price}
-                    image={product.images?.[0]}
-                  />
-                </Link>
+              {visibleItems.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  title={product.name}
+                  category={product.categoryId?.name}
+                  price={product.finalPrice}
+                  oldPrice={product.price}
+                  image={product.images?.[0]}
+                />
               ))}
             </div>
 
