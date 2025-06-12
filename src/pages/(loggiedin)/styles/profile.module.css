@@ -1,0 +1,75 @@
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 56px);
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 2rem;
+  background: #F1EFEF;
+  gap: 20px;
+}
+.profileContainer {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+
+.profileContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.profileImage {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #e2e8f0;
+  transition: transform 0.4s ease;
+}
+
+.profileImage:hover {
+  transform: scale(1.3) ;
+}
+
+.userInfo {
+  text-align: center;
+}
+
+.userInfo h3 {
+  color: #2d3748;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.userInfo h4 {
+  color: #4a5568;
+  font-size: 1.1rem;
+  font-weight: normal;
+}
+
+/* Animation Styles - Always Active */
+
+
+.neonAnimation {
+  animation: neonPulse 2s ease infinite alternate;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 
+                0 0 40px rgba(0, 255, 255, 0.4);
+  }
+}

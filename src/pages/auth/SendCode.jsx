@@ -2,16 +2,20 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import styles from "./SignInForm.module.css";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../../context/authContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+
 
 const emailSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
 });
 
 export const SendCode = () => {
+
+  useDocumentTitle("Reset Password");
   // Remove onEmailSubmit prop
   const { sendCode } = useAuth();
   const navigate = useNavigate();

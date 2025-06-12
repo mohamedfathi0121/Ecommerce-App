@@ -2,9 +2,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OK, z } from "zod";
 import styles from "./SignInForm.module.css";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../../context/authContext";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+
 
 const resetPasswordSchema = z
   .object({
@@ -24,6 +26,7 @@ const resetPasswordSchema = z
   });
 
 export const ResetPassword = () => {
+  useDocumentTitle("Reset Password");
   const { forgetPassword } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();

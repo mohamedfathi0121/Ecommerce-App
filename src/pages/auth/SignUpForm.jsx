@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema } from "../validation/auth";
-import { useAuth } from "../context/authContext";
+import { signUpSchema } from "../../validation/auth";
+import { useAuth } from "../../context/authContext";
 import styles from "./SignInForm.module.css";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../components/ui/Buttons";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const SignUpForm = () => {
+  useDocumentTitle("Sign Up");
   const navigate = useNavigate();
   const { signUp, loading: authLoading, error: authError } = useAuth();
   const {

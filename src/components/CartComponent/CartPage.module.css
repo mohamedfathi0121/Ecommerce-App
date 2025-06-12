@@ -14,27 +14,36 @@ body {
   width: 100%;
   margin: 0;
 }
-.container h1 {
+.cartDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
+.cartTitle {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 40px;
-  text-align: left;
-  margin-bottom: 20px;
-}
-.cartDiv {
-  display: flex;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  text-align: center;
+  width: 100%;
 }
 
 /* Left section -> item style */
 .cartContainer {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border: 1px solid rgb(226, 226, 226);
-  padding: 20px 24px 20px 24px;
   background-color: #fff;
   border-radius: 20px;
-  margin-right: 24px;
-  width: 715px;
-  height: 508px;
+  width: 90%;
+  max-width: 90%;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 10px;
+  overflow-x: hidden;
+  margin: auto;
 }
 
 .cartItem {
@@ -44,8 +53,11 @@ body {
   margin-bottom: 20px;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 15px;
-  width: 667px;
-  height: 124px;
+  width: 100%;
+  min-height: 124px;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .cartItem:last-child {
@@ -57,7 +69,6 @@ body {
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
-  margin-right: 15px;
   background-color: #f0eeed;
 }
 
@@ -92,7 +103,7 @@ body {
 }
 
 input {
-  padding: 12px 20px 12px 20px;
+  padding: 12px 20px;
   border: 1px solid #ddd;
   border-radius: 62px;
   cursor: pointer;
@@ -101,6 +112,7 @@ input {
   width: 126px;
   height: 44px;
   color: #333;
+  text-align: center;
 }
 
 .deleteIcon img {
@@ -108,6 +120,17 @@ input {
   font-size: 20px;
   width: 44px;
   height: 44px;
+  margin-left: 10px;
+}
+
+.qtyBTN {
+  padding-top: 10px;
+}
+.qtyBTN img {
+  cursor: pointer;
+  font-size: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 /* Right section -> Order summary*/
@@ -118,8 +141,9 @@ input {
   padding: 20px 24px 20px 24px;
   background-color: #fff;
   border-radius: 20px;
-  width: 505px;
+  width: 90%;
   height: 458px;
+  margin-bottom: 30px;
 }
 .orderSummaryRight h2 {
   font-family: Satoshi;
@@ -152,8 +176,10 @@ input {
   display: flex;
   padding: 12px 16px 12px 16px;
   margin-top: 15px;
+  width: 50%;
   gap: 12px;
   position: relative;
+  margin: auto;
 }
 .promo input {
   flex: 2;
@@ -162,7 +188,7 @@ input {
   border: 1px solid #ddd;
   outline: none;
   padding-left: 35px;
-  width: 100%;
+  width: 50%;
   height: 35px;
 }
 
@@ -180,7 +206,7 @@ input {
 .checkoutButton {
   margin-top: 15px;
   display: block;
-  width: 100%;
+  width: 25%;
   background-color: black;
   color: white;
   padding: 12px;
@@ -189,4 +215,78 @@ input {
   text-decoration: none;
   font-weight: 700;
   cursor: pointer;
+  margin: auto;
+  margin-bottom: 20px;
+}
+.cartItemLeft{
+  display: flex;
+
+}
+/* @media screen and (min-width: 336px) and (max-width: 850px) {
+.checkoutButton {
+    width: 70%;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+}
+@media screen and (max-width: 335px) {
+.checkoutButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+}
+
+@media screen and (min-width:464px) and (max-width: 741px) {
+.cartItem {
+  align-items: center;
+  justify-content: center;
+}
+  .itemDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+}
+@media screen and (max-width: 463px) {
+.cartItem {
+  align-items: center;
+  justify-content: center;
+}
+
+}
+@media screen and (max-width: 475px) {
+  .itemDetails {
+  display: flex;
+  flex-direction: column;
+align-items: center;
+  justify-content: center;
+  }
+} */
+
+@media  (max-width: 750px) {
+.cartItem {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;    
+  gap : 10px;
+  
+}
+.cartItemLeft {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  gap: 3px;
+}
+
 }

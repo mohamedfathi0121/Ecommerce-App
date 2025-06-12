@@ -1,16 +1,17 @@
 // src/components/auth/SignInForm.js
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema } from "../validation/auth";
-import { useAuth } from "../context/authContext";
+import { signInSchema } from "../../validation/auth";
+import { useAuth } from "../../context/authContext";
 import toast from "react-hot-toast";
 import styles from "./SignInForm.module.css";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 const SignInForm = () => {
+  useDocumentTitle("Sign In");
+
   const navigate = useNavigate();
   const { signIn, loading: authLoading, error: authError } = useAuth();
-
   const {
     register,
     handleSubmit,
@@ -45,8 +46,8 @@ const SignInForm = () => {
           onSubmit={handleSubmit(onSubmit)}
           className={styles.formContainer}
         >
-      <h2 className={styles.title}>Sign In</h2>
-                {authError && <div className={styles.error}>{authError}</div>}
+          <h2 className={styles.title}>Sign In</h2>
+          {authError && <div className={styles.error}>{authError}</div>}
 
           <div className={styles.inputGroup}>
             <label htmlFor="email" className={styles.label}>

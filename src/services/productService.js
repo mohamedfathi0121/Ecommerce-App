@@ -1,15 +1,15 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: 'https://e-commerce-pearl-omega.vercel.app/api/v1',
+  baseURL: "https://e-commerce-pearl-omega.vercel.app/api/v1",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 export const fetchAllProducts = async () => {
   try {
-    const response = await api.get('/product');
+    const response = await api.get("/product");
     console.log("Full response data:", response.data);
 
     // المفتاح الصح هو finlProducts
