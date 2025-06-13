@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import styles from "./layout.module.css";
+import logo from "../../assets/SHOP.CO.svg"
 export default function LoginLayout() {
   return (
     <div className="layout">
@@ -7,7 +8,7 @@ export default function LoginLayout() {
         <header className={styles.header}>
           <div className={styles.container}>
             <Link to="/" className={styles.logo}>
-              <img src="/src/assets/SHOP.CO.svg" alt="Shop.co Logo" />
+              <img src={logo}alt="Shop.co Logo" />
             </Link>
           </div>
         </header>

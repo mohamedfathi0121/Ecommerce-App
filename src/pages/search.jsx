@@ -12,7 +12,7 @@ function Search() {
   const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const query = searchParams.get("search");
+  const query = searchParams.get("search").toLowerCase().trim();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +35,7 @@ function Search() {
   }
   return (
     <div>
-      <h1>Search Page</h1>
+      <h1 style={{ textAlign: "center" ,padding:"20px"}}>Search Page</h1>
       {loading && <Spinner />}
       {error && <p>{error}</p>}
       {searchResults.length === 0 ? (
@@ -45,9 +45,10 @@ function Search() {
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(250px, 400px))",
                 justifyContent: "center",
-                
                 gap: "20px",
                 padding: "0 20px",
+                marginBottom: "40px",
+                marginTop: "40px",
               }}>
           {searchResults.map(product => (
            
@@ -57,7 +58,7 @@ function Search() {
                 key={product._id}
               >
                 <ProductCard
-                  title={product.name}
+                  title={product._id}
                   category={product.categoryId?.name}
                   price={product.finalPrice}
                   oldPrice={product.price}

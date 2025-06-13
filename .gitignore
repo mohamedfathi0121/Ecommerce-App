@@ -31,3 +31,6 @@ dist-ssr
 !.vercel/project.json
 
 .vercel
+
+# Local Netlify folder
+.netlify

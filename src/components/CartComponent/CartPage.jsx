@@ -1,52 +1,55 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import style from "./CartPage.module.css";
-import { verifyToken } from "../../services/api/auth";
-import axios from "axios";
+// import { verifyToken } from "../../services/api/auth";
+// import axios from "axios";
 import { useCart } from "../../context/CartContext";
 import Spinner from "../shared/Spinner";
+import add from "../../assets/plus.png";
+import minus from "../../assets/minus.png";
+import deleteIcon from "../../assets/delete.png";
 
-const API_URL = "https://e-commerce-pearl-omega.vercel.app/api/v1/cart";
-const getToken = () => localStorage.getItem("token");
+// const API_URL = "https://e-commerce-pearl-omega.vercel.app/api/v1/cart";
+// const getToken = () => localStorage.getItem("token");
 
-const getAuthHeaders = () => ({
-  "Content-Type": "application/json",
-  Authorization: `Hamada__${getToken()}`,
-});
+// const getAuthHeaders = () => ({
+//   "Content-Type": "application/json",
+//   Authorization: `Hamada__${getToken()}`,
+// });
 
-const fetchCartAPI = async () => {
-  const res = await axios.get(API_URL, {
-    headers: getAuthHeaders(),
-  });
-  return res.data.cart || [];
-};
+// const fetchCartAPI = async () => {
+//   const res = await axios.get(API_URL, {
+//     headers: getAuthHeaders(),
+//   });
+//   return res.data.cart || [];
+// };
 
-const removeFromCartAPI = async productId => {
-  await axios.patch(
-    `${API_URL}/remove`,
-    { productId },
-    { headers: getAuthHeaders() }
-  );
-};
+// const removeFromCartAPI = async productId => {
+//   await axios.patch(
+//     `${API_URL}/remove`,
+//     { productId },
+//     { headers: getAuthHeaders() }
+//   );
+// };
 
-const updateQuantityAPI = async (productId, quantity) => {
-  if (quantity <= 0) {
-    return removeFromCartAPI(productId);
-  }
-  await axios.patch(
-    `${API_URL}/update`,
-    { productId, quantity },
-    { headers: getAuthHeaders() }
-  );
-};
+// const updateQuantityAPI = async (productId, quantity) => {
+//   if (quantity <= 0) {
+//     return removeFromCartAPI(productId);
+//   }
+//   await axios.patch(
+//     `${API_URL}/update`,
+//     { productId, quantity },
+//     { headers: getAuthHeaders() }
+//   );
+// };
 
-const clearCartAPI = async () => {
-  await axios.patch(`${API_URL}/clear`, {}, { headers: getAuthHeaders() });
-};
+// const clearCartAPI = async () => {
+//   await axios.patch(`${API_URL}/clear`, {}, { headers: getAuthHeaders() });
+// };
 
 const CartPage = () => {
-  const [cart, setCart] = useState([]);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [cart, setCart] = useState([]);
+  // const [user, setUser] = useState(null);
+  // const [loading, setLoading] = useState(true);
   const {
     cartItems,
     increaseQuantity,
@@ -54,29 +57,29 @@ const CartPage = () => {
     removeFromCart,
     clearCart,
   } = useCart();
-  const getToken = () => localStorage.getItem("token");
+  // const getToken = () => localStorage.getItem("token");
 
-  useEffect(() => {
-    const checkLoginAndLoadCart = async () => {
-      try {
-        const token = getToken();
-        if (!token) throw new Error("No token found");
+  // useEffect(() => {
+  //   const checkLoginAndLoadCart = async () => {
+  //     try {
+  //       const token = getToken();
+  //       if (!token) throw new Error("No token found");
 
-        const user = await verifyToken(token);
-        setUser(user);
+  //       const user = await verifyToken(token);
+  //       setUser(user);
 
-        const items = await fetchCartAPI();
-        setCart(items);
-      } catch (err) {
-        console.error(err);
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       const items = await fetchCartAPI();
+  //       setCart(items);
+  //     } catch (err) {
+  //       console.error(err);
+  //       setUser(null);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    checkLoginAndLoadCart();
-  }, []);
+  //   checkLoginAndLoadCart();
+  // }, []);
 
   // const handleUpdateQuantity = async (productId, quantity) => {
   //   await updateQuantityAPI(productId, quantity);
@@ -84,16 +87,16 @@ const CartPage = () => {
   //   setCart(items);
   // };
 
-  const handleClearCart = async () => {
-    await clearCartAPI();
-    const items = await fetchCartAPI();
-    setCart(items);
-    window.location.href = "/products";
-  };
+  // const handleClearCart = async () => {
+  //   await clearCartAPI();
+  //   const items = await fetchCartAPI();
+  //   setCart(items);
+  //   window.location.href = "/products";
+  // };
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -132,20 +135,20 @@ const CartPage = () => {
                     onClick={() => increaseQuantity(item.id)}
                     className={style.qtyBTN}
                   >
-                    <img src="/src/assets/plus.png" alt="delete" />
+                    <img src={add} alt="delete" />
                   </div>
                   <input type="number" min={1} value={item.quantity} />
                   <div
                     onClick={() => decreaseQuantity(item.id)}
                     className={style.qtyBTN}
                   >
-                    <img src="/src/assets/minus.png" alt="delete" />
+                    <img src={minus} alt="delete" />
                   </div>
                   <div
                     className={style.deleteIcon}
                     onClick={() => removeFromCart(item.id)}
                   >
-                    <img src="/src/assets/delete.png" alt="delete" />
+                    <img src={deleteIcon} alt="delete" />
                   </div>
                 </div>
               </div>
@@ -177,7 +180,7 @@ const CartPage = () => {
             <button type="button">Apply</button>
           </div>
 
-          <button className={style.checkoutButton} onClick={handleClearCart}>
+          <button className={style.checkoutButton} >
             Go to Checkout →
           </button>
           <button className={style.checkoutButton} onClick={() => clearCart()}>

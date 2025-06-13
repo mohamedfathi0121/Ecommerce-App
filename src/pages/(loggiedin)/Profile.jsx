@@ -2,17 +2,17 @@ import styles from "./styles/profile.module.css";
 import { useAuth } from "../../context/authContext";
 import Spinner from "../../components/shared/Spinner";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import profileImage from "../../assets/person_icon.png"
 
 function Profile() {
   useDocumentTitle("Profile");
-  const { user, loading } = useAuth();
-
+  const { user, loading} = useAuth();
   // Add better error handling
   if (loading) return <Spinner />;
-  if (!user?.user) return <p>No user found</p>;
+  if (!user) return <p>No user found</p>;
 
   // Destructure user data
-  const { userName, email } = user.user;
+  const { userName, email } = user || {};
 
   return (
     <div className={styles.profilePage}>
@@ -20,7 +20,7 @@ function Profile() {
         <div className={styles.profileContent}>
           <h2>User Profile</h2>
           <img
-            src="../../src/assets/person_icon.png"
+            src={profileImage}
             alt="Profile"
             className={styles.profileImage}
           />

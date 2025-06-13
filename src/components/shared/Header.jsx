@@ -4,6 +4,7 @@ import styles from "./Header.module.css";
 import { Button } from "../ui/Buttons";
 import { useAuth } from "../../context/authContext";
 import { FaUser, FaShoppingCart, FaHeart, FaSearch } from "react-icons/fa";
+import logo from "../../assets/SHOP.CO.svg"
 
 function Header() {
   const { user, loading, signOut } = useAuth();
@@ -25,7 +26,7 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <NavLink to="/" className={styles.logo}>
-          <img src="/src/assets/SHOP.CO.svg" alt="Shop.co Logo" />
+          <img src={logo} alt="Shop.co Logo" />
         </NavLink>
 
         <button

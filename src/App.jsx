@@ -20,6 +20,8 @@ import SendCode from "./pages/auth/SendCode";
 import Wishlist from "./pages/(loggiedin)/Wishlist";
 import Profile from "./pages/(loggiedin)/Profile";
 import Cart from "./pages/(loggiedin)/Cart";
+import CategoryProductsPage from "./pages/CategoryProductsPage";
+import { WishlistProvider } from "./context/WishListContext";
 
 
 
@@ -28,7 +30,8 @@ function App() {
     <>
       <Toaster position="top-right" reverseOrder={false} />
       <AuthProvider>
-        <CartProvider>
+        <WishlistProvider>
+          <CartProvider>
           <Routes>
             {/* Auth routes with LoginLayout */}
             <Route path="/" element={<LoginLayout />}>
@@ -41,10 +44,11 @@ function App() {
             {/* Main routes with Layout */}
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="products/:id" element={<ProductDetails />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
               <Route path="about" element={<AboutUs />} />
               <Route path="spinner" element={<Spinner />} />
               <Route path="search" element={<Search />} />
+              <Route path="/category/:id" element={<CategoryProductsPage />} />
 
               {/* Protected routes */}
               <Route element={<ProtectedRoutes />}>
@@ -58,6 +62,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </CartProvider>
+        </WishlistProvider>
       </AuthProvider>
     </>
   );
