@@ -59,6 +59,8 @@ function Home() {
                     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                     gap: "20px",
                     padding: "0 20px",
+                    marginBottom: "40px",
+                    marginTop: "20px",
                   }}
                 >
                   {products.slice(0, 5).map(product => (

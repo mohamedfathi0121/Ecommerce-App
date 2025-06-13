@@ -32,7 +32,7 @@ export default function CategoryProductsPage() {
   return (
     <div className="container mt-4">
       <h2 className="text-center mb-4">
-        {categoryData.name} Category Products
+        {categoryData.name.charAt(0).toUpperCase() + categoryData.name.slice(1).toLowerCase()} Category Products
       </h2>
 
       {products.length === 0 ? (
@@ -40,10 +40,12 @@ export default function CategoryProductsPage() {
       ) : (
         <div
           style={{
-            display: "grid",
+        display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
             gap: "20px",
             padding: "0 20px",
+            marginBottom: "40px",
+            marginTop: "20px",
           }}
         >
           {products.map(product => (

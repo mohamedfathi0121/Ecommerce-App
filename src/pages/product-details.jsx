@@ -21,6 +21,7 @@ const ProductDetails = () => {
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const { user } = useAuth();
+  const [categoryId, setCategoryId] = useState("");
 
   // Base URL for absolute image paths
   const baseUrl = "https://yourdomain.com"; // Replace with your actual domain
@@ -68,9 +69,7 @@ const ProductDetails = () => {
         setSelectedImage(productData.images?.[0] || "");
         setSelectedColor(productData.colors?.[0] || "");
         setSelectedSize(productData.size?.[0] || "");
-
-        const suggestions = await fetchRelatedProducts(id);
-        setRelatedProducts(suggestions);
+        setCategoryId(productData.categoryId || "");
       } catch (err) {
         setError(err.message || "An error occurred");
       } finally {
@@ -80,6 +79,20 @@ const ProductDetails = () => {
 
     getProduct();
   }, [id]);
+
+  useEffect(() => {
+    const fetchRelated = async () => {
+      console.log(categoryId);
+      try {
+        const relatedData = await fetchRelatedProducts(categoryId);
+        setRelatedProducts(relatedData);
+      } catch (err) {
+        console.error("Error fetching related products:", err);
+      }
+    };
+
+    fetchRelated();
+  }, [categoryId]);
 
   const handleAddToCart = e => {
     if (!user) {
@@ -188,51 +201,64 @@ const ProductDetails = () => {
               <span className={styles.currentPrice}>
                 ${product.finalPrice?.toFixed(2)}
               </span>
-              <span className={styles.oldPrice}>
-                ${product.price?.toFixed(2)}
-              </span>
-              <span className={styles.discount}>
-                {product.discount}% discount
-              </span>
+              {product.discount && (
+                <>
+                  <span className={styles.oldPrice}>
+                    ${product.price?.toFixed(2)}
+                  </span>
+                  <span className={styles.discount}>
+                    {product.discount}% discount
+                  </span>
+                </>
+              )}
             </div>
 
             <p className={styles.description}>{product.description}</p>
-
-            <div className={styles.colorSelection}>
-              <h3>Color:</h3>
-              <div className={styles.colorOptions}>
-                {product.colors?.map((color, index) => (
-                  <div
-                    key={index}
-                    className={`${styles.colorOption} ${
-                      selectedColor === color ? styles.selectedColor : ""
-                    }`}
-                    style={{ backgroundColor: color }}
-                    onClick={() => setSelectedColor(color)}
-                  />
-                ))}
+            {console.log(product)}
+            {product.colors && product.colors.length > 0 && (
+              <div className={styles.colorSelection}>
+                <h3>Color:</h3>
+                <div className={styles.colorOptions}>
+                  {product.colors?.map((color, index) => (
+                    <div
+                      key={index}
+                      className={`${styles.colorOption} ${
+                        selectedColor === color ? styles.selectedColor : ""
+                      }`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => setSelectedColor(color)}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-
-            <div className={styles.sizeSelection}>
-              <h3>Size :</h3>
-              <div className={styles.sizeOptions}>
-                {product.size?.map((size, index) => (
-                  <button
-                    key={index}
-                    className={`${styles.sizeOption} ${
-                      selectedSize === size ? styles.selectedSize : ""
-                    }`}
-                    onClick={() => setSelectedSize(size)}
-                  >
-                    {size.toUpperCase()}
-                  </button>
-                ))}
+            )}
+            {product.size.length > 0 && (
+              <div className={styles.sizeSelection}>
+                <h3>Size :</h3>
+                <div className={styles.sizeOptions}>
+                  {product.size?.map((size, index) => (
+                    <button
+                      key={index}
+                      className={`${styles.sizeOption} ${
+                        selectedSize === size ? styles.selectedSize : ""
+                      }`}
+                      onClick={() => setSelectedSize(size)}
+                    >
+                      {size.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            <p className={styles.availability}>
-              {product.stock > 0 ? "In stock" : "Out of stock"}
+            <p
+              className={styles.availability}
+              style={{
+                color: product.stock > 0 ? "green" : "red",
+                fontWeight: "bold",
+              }}
+            >
+              {product.stock > 0 ? "In stock " : "Out of stock"}
             </p>
 
             <div className={styles.actionButtons}>
@@ -284,7 +310,6 @@ const ProductDetails = () => {
                 style={{ textDecoration: "none" }}
               >
                 <ProductCard
-                  key={product._id}
                   id={product._id}
                   title={product.name}
                   category={product.categoryId?.name}

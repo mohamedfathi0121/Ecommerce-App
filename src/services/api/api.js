@@ -36,24 +36,25 @@ export const fetchProductById = async (id) => {
   }
 };
 
-export const fetchRelatedProducts = async (currentId, limit = 4) => {
+export const fetchRelatedProducts = async (id, limit = 4) => {
   try {
-    const response = await api.get('/product');
-    const data = response.data;
-
-    let allProducts = [];
-
-    if (data.finlProducts) {
-      allProducts = data.finlProducts;
-    } else if (Array.isArray(data)) {
-      allProducts = data;
+    // Validate inputs
+    if (!id || typeof id !== 'string') {
+      throw new Error('Invalid product ID: must be a non-empty string');
+    }
+    if (typeof limit !== 'number' || limit <= 0) {
+      throw new Error('Limit must be a positive number');
     }
 
-    return allProducts.filter(p => p._id !== currentId).slice(0, limit);
-  } catch (error) {
-    console.log(error);
+    // Make API request
+    const response = await api.get(`/category/${id}`);
+    const products = response.data?.category?.products || [];
     
-    throw new Error("Failed to load suggested products");
+    return products.slice(0, limit);
+    
+  } catch (error) {
+    console.error('Failed to fetch related products:', error);
+    throw new Error(`Failed to load suggested products: ${error.message}`);
   }
 };
 

@@ -12,13 +12,11 @@ function Wishlist() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 400px))",
-            justifyContent: "center",
-
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
             gap: "20px",
             padding: "0 20px",
             marginBottom: "40px",
-            marginTop: "40px",
+            marginTop: "20px",
           }}
         >
           {wishlist.length > 0 ? (
