@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
 import LoadingSpinner from "../spinner/LoadingSpinner";
-import { fetchAllProducts } from "../services/productService";
+import { fetchAllCategories } from "../services/categoryService";
 import { Banner } from "../components/herocomponent/banner";
+import { Link } from "react-router-dom";
 
 function Home() {
-  const [productsByCategory, setProductsByCategory] = useState({});
-  const [expandedCategories, setExpandedCategories] = useState({});
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllProducts()
+    fetchAllCategories()
       .then((data) => {
         if (!Array.isArray(data)) {
           console.error("Invalid data format:", data);
@@ -20,86 +20,79 @@ function Home() {
           return;
         }
 
-        const grouped = {};
-        data.forEach((product) => {
-          const category = product.categoryId?.name || "Unknown";
-          if (!grouped[category]) grouped[category] = [];
-          grouped[category].push(product);
-        });
-
-        setProductsByCategory(grouped);
+        setCategories(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching products:", err);
+        console.error("Error fetching categories:", err);
         setLoading(false);
       });
   }, []);
-
-  const handleShowMore = (category) => {
-    setExpandedCategories((prev) => ({
-      ...prev,
-      [category]: !prev[category],
-    }));
-  };
 
   if (loading) return <LoadingSpinner />;
 
   return (
     <div>
       <Banner />
-      {Object.entries(productsByCategory).map(([category, items]) => {
-        const visibleItems = expandedCategories[category]
-          ? items
-          : items.slice(0, 10);
+      {categories.map((category) => {
+        const products = Array.isArray(category.products) ? category.products : [];
 
         return (
-          <div key={category} style={{ marginBottom: "40px" }}>
+          <div key={category._id} style={{ marginBottom: "40px" }}>
             <SectionTitle>
-              {category.charAt(0).toUpperCase() +
-                category.slice(1).toLowerCase() +
-                " Department"}
+              {category.name.charAt(0).toUpperCase() +
+                category.name.slice(1).toLowerCase()}{" "}
+              Department
             </SectionTitle>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "20px",
-                padding: "0 20px",
-              }}
-            >
-              {visibleItems.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  title={product.name}
-                  category={product.categoryId?.name}
-                  price={product.finalPrice}
-                  oldPrice={product.price}
-                  image={product.images?.[0]}
-                />
-              ))}
-            </div>
-
-            {items.length > 6 && (
-              <div style={{ textAlign: "center", marginTop: "10px" }}>
-                <button
-                  onClick={() => handleShowMore(category)}
+            {products.length === 0 ? (
+              <p style={{ textAlign: "center", fontStyle: "italic" }}>
+                No products in this category yet.
+              </p>
+            ) : (
+              <>
+                <div
                   style={{
-                    padding: "8px 5vw",
-                    borderRadius: "6px",
-                    border: "none",
-                    backgroundColor: "#1e90ff",
-                    color: "white",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    marginTop: "5vh",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                    gap: "20px",
+                    padding: "0 20px",
                   }}
                 >
-                  {expandedCategories[category] ? "Less" : "More"}
-                </button>
-              </div>
+                  {products.slice(0, 5).map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      id={product.id}
+                      title={product.name}
+                      category={category.name}
+                      price={product.price}
+                      oldPrice={null}
+                      image={product.image || category.image}
+                    />
+                  ))}
+                </div>
+
+                {products.length > 5 && (
+                  <div style={{ textAlign: "center", marginTop: "10px" }}>
+                    <Link to={`/category/${category._id}`}>
+                      <button
+                        style={{
+                          padding: "8px 5vw",
+                          borderRadius: "6px",
+                          border: "none",
+                          backgroundColor: "#1e90ff",
+                          color: "white",
+                          cursor: "pointer",
+                          fontSize: "14px",
+                          marginTop: "5vh",
+                        }}
+                      >
+                        More
+                      </button>
+                    </Link>
+                  </div>
+                )}
+              </>
             )}
           </div>
         );
