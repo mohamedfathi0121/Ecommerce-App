@@ -56,7 +56,7 @@ export default function CategoryProductsPage() {
                 category={categoryData.name}
                 price={product.price}
                 oldPrice={null}
-                image={product.image || categoryData.image}
+                image={product.images?.[0] || categoryData.image}
               />
             </Link>
           ))}

@@ -31,7 +31,7 @@ function Wishlist() {
                   //   category={category.name}
                   price={item.price}
                   oldPrice={null}
-                  image={item.image}
+                  image={item.images?.[0] || item.categoryId?.image}
                 />
               </div>
             ))

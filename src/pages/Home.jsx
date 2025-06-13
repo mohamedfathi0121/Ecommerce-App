@@ -13,7 +13,7 @@ function Home() {
 
   useEffect(() => {
     fetchAllCategories()
-      .then((data) => {
+      .then(data => {
         if (!Array.isArray(data)) {
           console.error("Invalid data format:", data);
           setLoading(false);
@@ -23,7 +23,7 @@ function Home() {
         setCategories(data);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error("Error fetching categories:", err);
         setLoading(false);
       });
@@ -34,8 +34,10 @@ function Home() {
   return (
     <div>
       <Banner />
-      {categories.map((category) => {
-        const products = Array.isArray(category.products) ? category.products : [];
+      {categories.map(category => {
+        const products = Array.isArray(category.products)
+          ? category.products
+          : [];
 
         return (
           <div key={category._id} style={{ marginBottom: "40px" }}>
@@ -59,18 +61,23 @@ function Home() {
                     padding: "0 20px",
                   }}
                 >
-                  {products.slice(0, 5).map((product) => (
-                    <Link to={`/products/${product._id}`} key={product._id} style={{ textDecoration: "none" }}>  <ProductCard
-                      key={product.id}
-                      id={product.id}
-                      title={product.name}
-                      category={category.name}
-                      price={product.price}
-                      oldPrice={null}
-                      image={product.image || category.image}
-                    /></Link>
-               
+                  {products.slice(0, 5).map(product => (
+                    <Link
+                      to={`/products/${product._id}`}
+                      key={product._id}
+                      style={{ textDecoration: "none" }}
+                    >
                     
+                      <ProductCard
+                        key={product.id}
+                        id={product.id}
+                        title={product.name}
+                        category={category.name}
+                        price={product.price}
+                        oldPrice={null}
+                        image={product.images?.[0] || category.image}
+                      />
+                    </Link>
                   ))}
                 </div>
 

@@ -199,7 +199,7 @@
 
 .actionButtons {
   display: flex;
-  gap: 16px;
+  gap: 35px;
   margin: 30px 0;
 }
 
@@ -249,6 +249,7 @@
   align-items: center;
   gap: 6px;
   transition: color 0.3s;
+  justify-content: center;
 }
 
 .wishlistBtn:hover, .shareBtn:hover {
@@ -310,9 +311,10 @@
   }
 }
  .relatedSection {
-  margin-top: 50px;
+  margin: 50px 0;
   border-top: 1px solid #ccc;
   padding-top: 30px;
+  
 }
 
 .relatedTitle {

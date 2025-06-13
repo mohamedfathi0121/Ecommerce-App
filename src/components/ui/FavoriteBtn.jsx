@@ -4,7 +4,7 @@ import { useAuth } from '../../context/authContext';
 import { useEffect, useState } from 'react';
 import { FaHeart ,  FaRegHeart } from 'react-icons/fa';
 
-const WishlistButton = ({ productId }) => {
+const WishlistButton = ({ productId ,title}) => {
   const { wishlist, toggleWishlistItem, loading } = useWishlist();
   const { isAuthenticated } = useAuth();
   const [isLiked, setIsLiked] = useState(
@@ -41,11 +41,14 @@ const WishlistButton = ({ productId }) => {
       className="btn btn-link p-0 border-0"
       style={{ 
         fontSize: '1.5rem',
-        color: isLiked ? '#dc3545' : '#6c757d',
-        transition: 'color 0.3s ease'
+        color: isLiked ? 'black' : '#6c757d',
+        fontWeight: isLiked ? 'bold' : 'normal',
+        transition: 'color 0.3s ease',
+        textDecoration: 'none',
       }}
     >
       {loading ? '...' : (isLiked ? <FaHeart style={{ color: 'black' }} /> :<FaRegHeart style={{ color: 'black' }}/> )}
+       {" "}{title }
     </button>
   );
 };
