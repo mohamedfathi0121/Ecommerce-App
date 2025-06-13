@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { FiShoppingCart, FiHeart, FiShare2 } from 'react-icons/fi';
 import Spinner from '../components/shared/Spinner';
 import ProductCard from "../components/HomepageComponent/ProductCard";
+import { useCart } from "../context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -15,6 +16,8 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const { addToCart } = useCart();
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -39,6 +42,20 @@ const ProductDetails = () => {
     getProduct();
   }, [id]);
 
+  const handleAddToCart = () => {
+    addToCart({
+      id: product._id,
+      title: product.name,
+      category: product.categoryId?.name,
+      price: product.finalPrice,
+      oldPrice: product.price,
+      image: product.images?.[0],
+    });
+
+    setShowAddedMessage(true);
+    setTimeout(() => setShowAddedMessage(false), 2000);
+  };
+
   if (loading) return <Spinner />;
   if (error) return <p style={{ color: 'red' }}>error: {error}</p>;
   if (!product) return <p>Product not found</p>;
@@ -46,7 +63,7 @@ const ProductDetails = () => {
   return (
     <div className={styles.container}>
       <div className={styles.productContainer}>
- 
+        {/* الصور */}
         <div className={styles.imageGallery}>
           <div className={styles.thumbnailsColumn}>
             {product.images?.map((img, index) => (
@@ -64,7 +81,7 @@ const ProductDetails = () => {
           </div>
         </div>
 
-    
+        {/* التفاصيل */}
         <div className={styles.detailsSection}>
           <h1 className={styles.productTitle}>{product.name}</h1>
           <p className={styles.brandName}>{product.brandId?.name || 'Unbranded'}</p>
@@ -119,10 +136,17 @@ const ProductDetails = () => {
           </p>
 
           <div className={styles.actionButtons}>
-            <button className={styles.addToCartBtn}>
+            <button className={styles.addToCartBtn} onClick={handleAddToCart}>
               <FiShoppingCart /> Add to Cart
             </button>
             <button className={styles.buyNowBtn}>Buy Now</button>
+
+            {/* ✅ رسالة النجاح */}
+            {showAddedMessage && (
+              <div style={{ color: "green", marginTop: "10px", fontSize: "14px" }}>
+                ✅ Product added to cart!
+              </div>
+            )}
           </div>
 
           <div className={styles.socialActions}>
@@ -135,22 +159,24 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-<div className={styles.relatedSection}>
-  <h2 className={styles.relatedTitle}>Suggested products</h2>
-  <div className={styles.relatedGrid}>
-    {relatedProducts.map(product => (
-      <ProductCard
-        key={product._id} 
-        title={product.name}
-        category={product.categoryId?.name}
-        price={product.finalPrice}
-        oldPrice={product.price}
-        image={product.images?.[0]}
-      />
-    ))}
-  </div>
-</div>
 
+      {/* المنتجات المقترحة */}
+      <div className={styles.relatedSection}>
+        <h2 className={styles.relatedTitle}>Suggested products</h2>
+        <div className={styles.relatedGrid}>
+          {relatedProducts.map(product => (
+            <ProductCard
+              key={product._id}
+              id={product._id}
+              title={product.name}
+              category={product.categoryId?.name}
+              price={product.finalPrice}
+              oldPrice={product.price}
+              image={product.images?.[0]}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
