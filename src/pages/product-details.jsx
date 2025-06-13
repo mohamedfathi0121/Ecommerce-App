@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/product-details.module.css";
 import { fetchProductById, fetchRelatedProducts } from "../services/api/api";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FiShoppingCart, FiHeart, FiShare2 } from "react-icons/fi";
 import Spinner from "../components/shared/Spinner";
 import ProductCard from "../components/HomepageComponent/ProductCard";
@@ -81,7 +81,7 @@ const ProductDetails = () => {
     getProduct();
   }, [id]);
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = e => {
     if (!user) {
       e.stopPropagation();
       e.preventDefault();
@@ -236,7 +236,12 @@ const ProductDetails = () => {
             </p>
 
             <div className={styles.actionButtons}>
-              <button className={styles.addToCartBtn} onClick={(e) => {handleAddToCart(e)}}>
+              <button
+                className={styles.addToCartBtn}
+                onClick={e => {
+                  handleAddToCart(e);
+                }}
+              >
                 <FiShoppingCart /> Add to Cart
               </button>
               <button className={styles.buyNowBtn}>Buy Now</button>
@@ -273,15 +278,21 @@ const ProductDetails = () => {
           <h2 className={styles.relatedTitle}>Suggested products</h2>
           <div className={styles.relatedGrid}>
             {relatedProducts.map(product => (
-              <ProductCard
+              <Link
+                to={`/products/${product._id}`}
                 key={product._id}
-                id={product._id}
-                title={product.name}
-                category={product.categoryId?.name}
-                price={product.finalPrice}
-                oldPrice={product.price}
-                image={getAbsoluteImageUrl(product.images?.[0])}
-              />
+                style={{ textDecoration: "none" }}
+              >
+                <ProductCard
+                  key={product._id}
+                  id={product._id}
+                  title={product.name}
+                  category={product.categoryId?.name}
+                  price={product.finalPrice}
+                  oldPrice={product.price}
+                  image={getAbsoluteImageUrl(product.images?.[0])}
+                />
+              </Link>
             ))}
           </div>
         </div>

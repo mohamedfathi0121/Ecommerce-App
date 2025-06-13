@@ -65,9 +65,8 @@ function Home() {
                     <Link
                       to={`/products/${product._id}`}
                       key={product._id}
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", maxWidth: "400px" }}
                     >
-                    
                       <ProductCard
                         key={product.id}
                         id={product.id}
