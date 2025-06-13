@@ -58,6 +58,13 @@ export default function ProductCard({
             </span>
           )}
         </div>
+        
+        {/* <button 
+        class={style.iconButton}
+        aria-label="Favorites">
+          <FaHeart />
+        </button> */}
+
 
         <button onClick={handleAdd} className="btn btn-dark btn-sm mt-2">
           Add to Cart

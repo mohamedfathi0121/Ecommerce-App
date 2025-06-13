@@ -254,7 +254,26 @@
 .wishlistBtn:hover, .shareBtn:hover {
   color: var(--primary);
 }
+.shareBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
+.shareBtn:hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.shareBtn svg {
+  font-size: 1.2rem;
+}
 /* .recommendedSection {
   margin: 60px 0;
 } */

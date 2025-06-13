@@ -35,7 +35,12 @@ api.interceptors.response.use(
 );
 
 export const addToWishlist = async (productId) => {
-  return api.patch(`/product/${productId}/wishlist/add`, {
-    
-  });
+    try {
+    const response = await api.patch(`/product/${productId}/wishlist/add`);
+    return response;
+  } catch (error) {
+    console.error("Error adding to wishlist:", error);
+    throw error;
+  }
+
 };
