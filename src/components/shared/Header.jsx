@@ -12,20 +12,23 @@ function Header() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
   const handleSearchChange = (e) => setSearchTerm(e.target.value);
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log("Search:", searchTerm);
+    closeMenu();
   };
 
   const handleLogout = () => {
     signOut();
+    closeMenu();
   };
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <NavLink to="/" className={styles.logo}>
+        <NavLink to="/" className={styles.logo} onClick={closeMenu}>
           <img src={logo} alt="Shop.co Logo" />
         </NavLink>
 
@@ -46,6 +49,7 @@ function Header() {
                 `${styles.navLink} ${isActive ? styles.active : ""}`
               }
               end
+              onClick={closeMenu}
             >
               Home
             </NavLink>
@@ -54,6 +58,7 @@ function Header() {
               className={({ isActive }) =>
                 `${styles.navLink} ${isActive ? styles.active : ""}`
               }
+              onClick={closeMenu}
             >
               About
             </NavLink>
@@ -62,6 +67,7 @@ function Header() {
               className={({ isActive }) =>
                 `${styles.navLink} ${isActive ? styles.active : ""}`
               }
+              onClick={closeMenu}
             >
               Contact
             </NavLink>
@@ -78,7 +84,7 @@ function Header() {
               aria-label="Search products"
             />
 
-          { searchTerm && <Link to={`/search/?search=${searchTerm}`}>
+          { searchTerm && <Link to={`/search/?search=${searchTerm}`} onClick={closeMenu}>
             <button            
               className={styles.searchButton}
               aria-label="Submit search"
@@ -100,6 +106,7 @@ function Header() {
                     `${styles.iconButton} ${isActive ? styles.active : ""}`
                   }
                   aria-label="Favorites"
+                  onClick={closeMenu}
                 >
                   <FaHeart />
                 </NavLink>
@@ -109,6 +116,7 @@ function Header() {
                     `${styles.iconButton} ${isActive ? styles.active : ""}`
                   }
                   aria-label="Cart"
+                  onClick={closeMenu}
                 >
                   <FaShoppingCart />
                 </NavLink>
@@ -118,6 +126,7 @@ function Header() {
                     `${styles.iconButton} ${isActive ? styles.active : ""}`
                   }
                   aria-label="Profile"
+                  onClick={closeMenu}
                 >
                   <FaUser />
                 </NavLink>
@@ -132,7 +141,7 @@ function Header() {
             </>
               
           ) : (
-            <Link to="/login">
+            <Link to="/login" onClick={closeMenu}>
               <Button title="Login" aria-label="Login" />
             </Link>
           )}

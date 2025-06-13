@@ -112,7 +112,7 @@
 }
 
 /* Responsive styles */
-@media (max-width: 950px) {
+@media (max-width: 1080px) {
   .logo img {
     height: 40px;
     width: 150px;
