@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import SectionTitle from "../components/HomepageComponent/SectionTitle";
 import ProductCard from "../components/HomepageComponent/ProductCard";
-import LoadingSpinner from "../spinner/LoadingSpinner";
 import { fetchAllCategories } from "../services/categoryService";
 import { Banner } from "../components/herocomponent/banner";
 import { Link } from "react-router-dom";
+import Spinner from "../components/shared/Spinner";
 
 function Home() {
   const [categories, setCategories] = useState([]);
@@ -29,7 +29,7 @@ function Home() {
       });
   }, []);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <Spinner />;
 
   return (
     <div>
@@ -84,7 +84,7 @@ function Home() {
 
                 {products.length > 5 && (
                   <div style={{ textAlign: "center", marginTop: "10px" }}>
-                    <Link to={`/category/${category._id}`}>
+                    <Link to={`/category/${category._id}`} >
                       <button
                         style={{
                           padding: "8px 5vw",

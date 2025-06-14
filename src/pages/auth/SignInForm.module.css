@@ -38,6 +38,7 @@
   border-radius: 4px;
   background-color: white;
   font-size: 1rem;
+  text-align: start;
 }
 .button {
   width: 100%;

@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/HomepageComponent/ProductCard";
-import LoadingSpinner from "../spinner/LoadingSpinner";
 import axios from "axios";
+import Spinner from "../components/shared/Spinner";
 
 export default function CategoryProductsPage() {
   const { id } = useParams(); // 👈 ناخد الـ category id من الرابط
@@ -22,7 +22,7 @@ export default function CategoryProductsPage() {
       });
   }, [id]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <Spinner />;
 
   if (!categoryData)
     return <p className="text-center mt-4">Category not found.</p>;

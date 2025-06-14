@@ -53,7 +53,7 @@ export const SendCode = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.loginBg}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         <h2 className={styles.title}>Reset Password</h2>
         {error && <p className={styles.error}>{error}</p>}
