@@ -36,7 +36,7 @@ export const fetchProductById = async (id) => {
   }
 };
 
-export const fetchRelatedProducts = async (id, limit = 4) => {
+export const fetchRelatedProducts = async (id, limit = 5) => {
   try {
     // Validate inputs
     if (!id || typeof id !== 'string') {
